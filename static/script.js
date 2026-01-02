@@ -13,6 +13,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("search-chats-input");
     const canvas = document.getElementById('starfield');
     const ctx = canvas.getContext('2d');
+    const profileCorner = document.getElementById('profile-corner');
+    const pfp = document.getElementById('pfp');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    const usernameDropdown = document.getElementById('username-dropdown');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    // --- Profile Corner ---
+    const username = localStorage.getItem("username");
+    if (username) {
+        usernameDropdown.textContent = username;
+        pfp.textContent = username.charAt(0).toUpperCase();
+    } else {
+        profileCorner.style.display = 'none';
+    }
+
+    pfp.addEventListener('click', (event) => {
+        event.stopPropagation();
+        profileDropdown.classList.toggle('hidden');
+    });
+
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('username');
+        window.location.href = '/';
+    });
+
+    window.addEventListener('click', () => {
+        if (!profileDropdown.classList.contains('hidden')) {
+            profileDropdown.classList.add('hidden');
+        }
+    });
+
+    profileDropdown.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
 
     // --- State ---
     let chats = []; 

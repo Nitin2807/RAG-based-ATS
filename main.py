@@ -20,7 +20,7 @@ app_state = {}
 async def lifespan(app: FastAPI):
     print("Startup: Loading models and connecting to DB...")
     
-    # 1. Get API Keys from Colab Secrets
+    # 1. Get API Keys from environment variables
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
     MONGO_URI = os.getenv("MONGO_URI")
     os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
@@ -130,13 +130,17 @@ async def get_pdf(filename: str):
         print(f"Error retrieving PDF: {e}")
         raise HTTPException(status_code=500, detail="Error retrieving PDF")
 
-# --- NEW FRONTEND ENDPOINTS ---
+# --- FRONTEND ENDPOINTS ---
 
-# This endpoint serves your main HTML page
+# This endpoint serves the login HTML page as the default
 @app.get("/")
+async def get_login_page():
+    return FileResponse("static/login.html")
+
+# This endpoint serves your main chat HTML page
+@app.get("/chat")
 async def get_index():
     return FileResponse("static/index.html")
 
-# This mounts the 'static' directory, making style.css and script.js available
-app.mount("/", StaticFiles(directory="static"), name="static")
-# -----------------------------
+# This mounts the 'static' directory, making style.css, script.js, login.css, login.js available
+app.mount("/static", StaticFiles(directory="static"), name="static")

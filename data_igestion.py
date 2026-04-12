@@ -28,11 +28,8 @@ db = client['ats_db']
 collection = db['resumes'] # This script populates the 'resumes' collection
 
 # --- 3. Define the folder where your resumes are stored ---
-#    ⚠️ UPDATE THIS PATH to the folder on YOUR computer where the PDFs are! ⚠️
-#    Example: resumes_folder_path = '/Users/your_username/Documents/ResumeProject/PDFs/'
-#    Or on Windows: resumes_folder_path = 'C:/Users/your_username/Documents/ResumeProject/PDFs/'
-resumes_folder_path = './resume_pdfs/' # Default: assumes a folder named 'resume_pdfs' in the same directory as this script
 
+resumes_folder_path = './resume_pdfs/' # idhar ayega path 
 if not os.path.exists(resumes_folder_path):
     print(f"❌ Error: The path '{resumes_folder_path}' does not exist.")
     print("Please create the folder or update the 'resumes_folder_path' variable in this script.")
